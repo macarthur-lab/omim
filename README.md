@@ -10,7 +10,13 @@ example usage:
 
 e.g python parse_omim.py --hgnc data/gene_symbol_thesaurus.txt --use --output data/use_omim_table.txt
 
-gene_symbol_thesaurus is a file which maps gene aliases to the corresponding HGNC symbol. Aliases will either map to zero or 1 HGNC symbol; however, multiple aliases can map to the same HGNC symbol. This can get complicated so the schema we've adopted is to have three columns: genes, hgnc_synonyms, and hgnc_genes. "genes" is a pipe-delimited field containing all the gene names listed in the OMIM database for a given entry. "hgnc_synonyms" is another pipe-delimited field where the sub-fields contain the corresponding synonyms of the aliases listed in the "genes" field. If no synonym is present, the value will be NA. And finally, "hgnc_genes" is a comma-delimited field containing all non-NA entries in the "hgnc_synonyms" field. This will probably be the one you will want to use.
+gene_symbol_thesaurus is a file which maps gene aliases to the corresponding HGNC symbol. Aliases will either map to zero or 1 HGNC symbol; however, multiple aliases can map to the same HGNC symbol. This can get complicated so the schema we've adopted is to have three columns: genes, hgnc_synonyms, and hgnc_genes. 
+
+"genes" is a pipe-delimited field containing all the gene names listed in the OMIM database for a given entry. 
+
+"hgnc_synonyms" is another pipe-delimited field where the sub-fields contain the corresponding synonyms of the aliases listed in the "genes" field. If no synonym is present, the value will be NA. 
+
+And finally, "hgnc_genes" is a comma-delimited field containing all non-NA entries in the "hgnc_synonyms" field. This will probably be the one you will want to use.
 
 e.g. gene name schema
 
