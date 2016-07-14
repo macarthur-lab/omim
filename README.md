@@ -6,7 +6,7 @@ parse_omim.py downloads data from OMIM API via HTTP request, writes to a tsv fil
 
 Also, parse_omim cherry-picks a few fields to include in the output file. These fields come from the schema described here https://omim.org/help/api, specifically the "Entry Data" section.
 
-### e.g. python parse_omim.py --hgnc data/gene_symbol_thesaurus.txt --use --output data/use_omim_table.txt
+### e.g. python src/parse_omim.py --hgnc data/gene_symbol_thesaurus.txt --use --output data/use_omim_table.txt
 
 gene_symbol_thesaurus is a file which maps gene aliases to the corresponding HGNC symbol. Aliases will either map to zero or 1 HGNC symbol; however, multiple aliases can map to the same HGNC symbol. This can get complicated so the schema we've adopted is to have three columns which describe how the gene names were processed: genes, hgnc_synonyms, and hgnc_genes. 
 
