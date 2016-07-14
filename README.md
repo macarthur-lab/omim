@@ -21,6 +21,7 @@ And finally, "hgnc_genes" is a comma-delimited field containing all non-NA entri
 ### gene name schema
 
 genes   hgnc_synonyms   hgnc_genes
+
 CMM|MLM|DNS     CMM|CDKN2A|CMM  CMM,CDKN2A
 
 SCAR4|SCASI     SCASI|SCASI     SCASI
