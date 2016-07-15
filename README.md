@@ -22,7 +22,7 @@ And finally, "hgnc_genes" is a comma-delimited field containing all non-NA entri
 
 | genes                 | hgnc_synonyms  | hgnc_genes |
 |-----------------------|----------------|------------|
-| CMM|MLM|DNS           | CMM|CDKN2A|CMM | CMM,CDKN2A |
+| CMM\|MLM|DNS           | CMM|CDKN2A|CMM | CMM,CDKN2A |
 | SCAR4|SCASI           | SCASI|SCASI    | SCASI      |
 | B3GALT6|SEMDJL1|EDSP2 | B3GALT6|NA|NA  | B3GALT6    |
 
