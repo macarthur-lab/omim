@@ -1,5 +1,5 @@
 """
-Pulls down gene list and associated disease information from OMIM via HTTP API.
+Pulls down OMIM data via HTTP request.
 """
 
 __author__ = 'bernie'
@@ -19,14 +19,14 @@ def get_gene_thesaurus(filename):
 	Returns mapping from gene symbol to list of synonymous, approved gene symbols 
 	ideally, there should only be one approved synonym for any given symbol, but 
 	this is not always the case. For example, there are some symbols that are listed both
-	as approved symbols and as synonyms for a different approved symbol.
+	as an approved symbol and as a synonym for a different approved symbol.
 	"""
 	thesaurus = defaultdict(list)
 	with open(filename, 'r') as lines:
 		for line in lines:
 			line = line.strip().split("\t")
 			approved = line[0]
-			thesaurus[approved].append(approved)
+			thesaurus[approved].append(approved) # map approved symbols to themselves
 			if line[1] != "NA":
 				synonyms = line[1].split(",")
 				for word in synonyms:
