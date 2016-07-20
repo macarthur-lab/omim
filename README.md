@@ -4,7 +4,7 @@ Repository for OMIM data.
 
 parse_omim.py downloads data from the OMIM API via HTTP request and writes it to a tsv file. The script uses a hard-coded API key which has some expiration date. New keys can be requested from the OMIM website here https://omim.org/api/.
 
-Also, the script cherry-picks a few fields to include in the output file. These fields come from the schema described here https://omim.org/help/api, specifically the "Entry Data" section.
+The script cherry-picks a few fields to include in the output file. These fields come from the schema described here https://omim.org/help/api, specifically the "Entry Data" section.
 
 ### e.g. python src/parse_omim.py --hgnc data/gene_symbol_thesaurus.txt --use --output data/use_omim_table.txt
 
@@ -20,13 +20,11 @@ And finally, "hgnc_genes" is a comma-delimited field containing all non-NA entri
 
 ### gene name schema
 
-genes     hgnc_synonyms     hgnc_genes
-
-CMM|MLM|DNS       CMM|CDKN2A|CMM    CMM,CDKN2A
-
-SCAR4|SCASI       SCASI|SCASI       SCASI
-
-B3GALT6|SEMDJL1|EDSP2     B3GALT6|NA|NA     B3GALT6
+| genes                 | hgnc_synonyms  | hgnc_genes |
+|-----------------------|----------------|------------|
+| CMM\|MLM\|DNS           | CMM\|CDKN2A\|CMM | CMM,CDKN2A |
+| SCAR4\|SCASI           | SCASI\|SCASI    | SCASI      |
+| B3GALT6\|SEMDJL1\|EDSP2 | B3GALT6\|NA\|NA  | B3GALT6    |
 
 If the --use option is activated, then only entries with a gene AND associated phenotype AND where the gene can be matched to an HGNC-approved symbol will be included.
 
