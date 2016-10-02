@@ -42,7 +42,7 @@ def main(args):
 	
 	# set parameters for HTTP request
 	request_data = {}
-	request_data['apiKey'] = 'tjqbNLkIQOOiXFd2ctwLGw'
+	request_data['apiKey'] = args.omim_api_key
 	request_data['format'] = 'json'
 	request_data['chromosome'] = chromosomes.next()
 	request_data['limit'] = 100
@@ -61,6 +61,7 @@ def main(args):
 	t = get_gene_thesaurus(args.hgnc)
 	sys.stdout.write("\rOn chromosome %s ..." % request_data['chromosome'])
 	sys.stdout.flush()
+	counter = defaultdict(int)
 	while True:
 		url = 'http://api.omim.org/api/geneMap'
 		# add parameters to url string
@@ -93,6 +94,7 @@ def main(args):
 
 		# write response data
 		for g in geneMapList:
+			counter["input_lines"] += 1
 			line = ['']*len(header.keys())
 			geneMap = g['geneMap']
 			genes = re.sub(' ', '', geneMap['geneSymbols']).split(',')
@@ -120,6 +122,7 @@ def main(args):
 				line[header['comments']] = 'NA'
 
 			if 'phenotypeMapList' in geneMap:
+				counter["input_lines_with_phenotypes"] += 1
 				phenotypeMapList = geneMap['phenotypeMapList']
 				for p in phenotypeMapList:
 					phenotypeMap = p['phenotypeMap']
@@ -135,6 +138,7 @@ def main(args):
 
 					line = map(str, line)
 					o.write('\t'.join(line) + '\n')
+					counter["output_lines"] += 1
 			elif args.use:
 				continue
 			else:
@@ -147,11 +151,18 @@ def main(args):
 		request_data['chromosomeSort'] += 100
 	
 	o.close()
-
+	
+	for k in ['input_lines', 'input_lines_with_phenotypes', 'output_lines']:
+		print("%10s %s" % (counter[k], k))
 
 if __name__ == '__main__':
-	parser = argparse.ArgumentParser()
+	try:
+		import configargparse
+		parser = configargparse.ArgumentParser(args_for_setting_config_path=["-c", "--config-file"])
+	except ImportError:
+		parser = argparse.ArgumentParser()
 	parser.add_argument('--hgnc', dest='hgnc', help='Path to gene thesaurus file.', required=True)
+	parser.add_argument('-k', '--omim-api-key', required=True)
 	parser.add_argument('-o', '--output', dest='output', default=sys.stdout)
 	parser.add_argument('--chrom', help='Only get data for given chromosome.')
 	parser.add_argument('--use', action='store_true', help='Only output entries with a gene AND associated phenotype AND WHERE the gene can be matched to an HGNC-approved symbol.')

@@ -1,12 +1,53 @@
 # omim
 
-Repository for OMIM data.
+Repository for downloading and converting OMIM data into an easier-to-use tab-delimitted table.
 
-parse_omim.py downloads data from the OMIM API via HTTP request and writes it to a tsv file. The script uses a hard-coded API key which has some expiration date. New keys can be requested from the OMIM website here https://omim.org/api/.
+There are 2 main scripts - one based on the OMIM api and one based on the OMIM downloadable files:
+```
+python src/parse_omim_from_downloads.py -c src/omim_downloads_key.txt
 
-The script cherry-picks a few fields to include in the output file. These fields come from the schema described here https://omim.org/help/api, specifically the "Entry Data" section.
+python src/parse_omim_from_api.py -c src/omim_api_key.txt --hgnc data/gene_symbol_thesaurus.txt --use --output use_omim_table.txt
+```
+Each produces it's own variant of the tsv table. The details below should help decide which is better for your use-case.
 
-### e.g. python src/parse_omim.py --hgnc data/gene_symbol_thesaurus.txt --use --output data/use_omim_table.txt
+
+parse_omim_from_downloads.py
+----------------------------
+
+This script downloads and parses the latest genemap2.txt file which contains OMIM gene/phenotype relatinoships. 
+It requires an API key (either on the command line or through a config file). This key can be requested from the OMIM website here https://omim.org/downloads/.
+
+It outputs the 'omim.tsv' which contains one row for each gene/phenotype relationship and has columns:
+   mim_number
+   approved_symbol
+   gene_name
+   ensembl_gene_id
+   gene_symbols
+   comments
+   inheritance
+   phenotype_mim_number
+   phenotype_description
+   phenotype_map_method
+
+
+parse_omim_from_api.py
+----------------------
+
+This script downloads data from the OMIM API via HTTP request and writes it to a tsv file. 
+It requires an API key (either on the command line or through a config file). This key can be requested from the OMIM website here https://omim.org/api/.
+
+It outputs a table which contains one row for each gene/phenotype relationship, and has columns:
+   genes
+   hgnc_synonyms
+   hgnc_genes
+   phenotype
+   phenotypeInheritance
+   geneMimNumber
+   phenotypeMimNumber
+   chromosome
+   comments
+
+These fields come from the schema described here https://omim.org/help/api, specifically the "Entry Data" section.
 
 gene_symbol_thesaurus.txt is a file which maps gene aliases to their corresponding HGNC symbol. Aliases will map to at most one HGNC symbol; however, multiple aliases can map to the same HGNC symbol. 
 
